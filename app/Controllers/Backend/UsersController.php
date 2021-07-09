@@ -13,7 +13,7 @@ class UsersController extends ResourceController
 
 	public function index() // get all Data
 	{
-		$res = $this->model->select('id_user,name,username','datetime_add')
+		$res = $this->model->select('id_user,name,username')
             ->findAll();
         // return $this->respond($getusesrM, 200);
         return $this->response
