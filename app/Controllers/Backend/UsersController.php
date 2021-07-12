@@ -13,7 +13,7 @@ class UsersController extends ResourceController
 
 	public function index() // get all Data
 	{
-		$res = $this->model->select('id_user,name,username')
+		$res = $this->model->select('id_user,name,username,datetime_add')
             ->findAll();
         // return $this->respond($getusesrM, 200);
         return $this->response
@@ -23,25 +23,46 @@ class UsersController extends ResourceController
 
     public function create() // create a Data
     {
+        helper('date');
+        $now = now();
+
         // echo "<per>";
         // print_r($_POST);
         // echo "</per>";
-        $data = [
-            'name' => $this->request->getPost('name'),
-            'username' => $this->request->getPost('username'),
-            'datetime_add' => $now = date('Y-m-d H:i:s'),
-        ];
-        $data = json_decode(file_get_contents("php://input"));
+        
+        $json = $this->request->getJSON();
+        // $getPost = $this->request->getPost();
+      
+        if($json){ //กรณีมาจาก VueJs เอาไว้ตรวจสอบข้อมูลมีค่าอะไรส่งมาบ้าง
+            // echo "json : ";
+            // print_r($json);
+            $data = [
+                $json->name,
+                $json->username,
+                $json->$now = date('Y-m-d H:i:s')
+            ];
 
-        $this->model->insert($data);
-    
-        $response = [
-            'status'   => 201,
-            'messages' => [
-                'success' => 'Data Saved'
-            ]
-        ];
-        return $this->respondCreated($response);
+            $data = json_decode(file_get_contents("php://input")); //กรณีส่งข้อมูลมาจาก font-end
+            $this->model->insert($data);
+            $response = [
+                'status'   => 201,
+                'messages' => [
+                    'success' => 'Data Saved'
+                ]
+            ];
+            return $this->respondCreated($response);
+            
+        }
+        
+        // if($getPost){ //กรณีมาจาก Postman  เอาไว้ตรวจสอบข้อมูลมีค่าอะไรส่งมาบ้าง
+        //     echo "Post : ";
+        //     print_r($getPost);
+        //     $data = [
+        //          'name' => $this->request->getPost('name'),
+        //          'username' => $this->request->getPost('username'),
+        //          'datetime_add' => ''
+        //     ];
+        // }
     }
 
     public function show($id = null) // ดึงข้อมูลมาเแสดงพื่อแก้ไข
