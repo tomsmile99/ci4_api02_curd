@@ -31,15 +31,16 @@ class UsersController extends ResourceController
         // echo "</per>";
         
         $json = $this->request->getJSON();
-        // $getPost = $this->request->getPost();
+        //$getPost = $this->request->getPost();
       
         if($json){ //กรณีมาจาก VueJs เอาไว้ตรวจสอบข้อมูลมีค่าอะไรส่งมาบ้าง
             // echo "json : ";
             // print_r($json);
+
             $data = [
-                $json->name,
-                $json->username,
-                $json->$now = date('Y-m-d H:i:s')
+                'name' =>   $json->name,
+                'username' => $json->username,
+                'datetime_add' => $json->$now = date('Y-m-d H:i:s')
             ];
 
             $data = json_decode(file_get_contents("php://input")); //กรณีส่งข้อมูลมาจาก font-end
@@ -51,21 +52,22 @@ class UsersController extends ResourceController
                 ]
             ];
             return $this->respondCreated($response);
-            
         }
-        
-        // if($getPost){ //กรณีมาจาก Postman  เอาไว้ตรวจสอบข้อมูลมีค่าอะไรส่งมาบ้าง
-        //     echo "Post : ";
-        //     print_r($getPost);
-        //     $data = [
-        //          'name' => $this->request->getPost('name'),
-        //          'username' => $this->request->getPost('username'),
-        //          'datetime_add' => ''
-        //     ];
-        // }
+        /*
+        if($getPost){ //กรณีมาจาก Postman  เอาไว้ตรวจสอบข้อมูลมีค่าอะไรส่งมาบ้าง
+            echo "Post : ";
+            print_r($getPost);
+
+            // $data = [
+            //      'name' => $this->request->getPost('name'),
+            //      'username' => $this->request->getPost('username'),
+            //      'datetime_add' => ''
+            // ];
+        }
+        */
     }
 
-    public function show($id = null) // ดึงข้อมูลมาเแสดงพื่อแก้ไข
+    public function show($id = null) // ดึงข้อมูลมาเแสดงพื่อแก้ไข pull
     {
         $data = $this->model->getWhere(['id_user' => $id])->getResult();
         if($data){
@@ -77,11 +79,14 @@ class UsersController extends ResourceController
 
     public function update($id = null) //แก้ไขข้อมูล
     {
+        helper('date');
+        $now = now();
         $json = $this->request->getJSON();
         if($json){
             $data = [
                 'name' =>   $json->name,
                 'username' => $json->username,
+                'datetime_edit' => $json->$now = date('Y-m-d H:i:s')
             ];
         }else{
             $input = $this->request->getRawInput();

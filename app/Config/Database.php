@@ -35,7 +35,7 @@ class Database extends Config
 		'hostname' => 'localhost',
 		'username' => 'root',
 		'password' => '',
-		'database' => 'ci4_api',
+		'database' => 'ssl2018',
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
 		'pConnect' => false,
@@ -49,6 +49,28 @@ class Database extends Config
 		'failover' => [],
 		'port'     => 3306,
 	];
+
+	/* on server
+	public $default = [
+		'DSN'      => '',
+		'hostname' => 'localhost',
+		'username' => 'saksiamc_db',
+		'password' => 'tomsmileAdmindatabase2019',
+		'database' => 'saksiamc_db',
+		'DBDriver' => 'MySQLi',
+		'DBPrefix' => '',
+		'pConnect' => false,
+		'DBDebug'  => (ENVIRONMENT !== 'production'),
+		'charset'  => 'utf8',
+		'DBCollat' => 'utf8_general_ci',
+		'swapPre'  => '',
+		'encrypt'  => false,
+		'compress' => false,
+		'strictOn' => false,
+		'failover' => [],
+		'port'     => 3306,
+	];
+	*/
 
 	/**
 	 * This database connection is used when

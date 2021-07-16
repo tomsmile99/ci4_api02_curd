@@ -41,12 +41,17 @@ $routes->get('api/users', 'Backend\UsersController::index'); // แสดงห�
 $routes->post('api/users', 'Backend\UsersController::create'); // create()
 $routes->get('api/users/(:segment)',      'Backend\UsersController::show/$1');  // แสดงหน้ารายละเอียด show()
 $routes->get('api/users/(:segment)/edit', 'Backend\UsersController::edit/$1');  // แสดงหน้าแก้ไข show()
-$routes->put('api/users/(:segment)',      'Backend\UsersController::update/$1'); // update()
+$routes->put('api/users/edit/(:segment)',      'Backend\UsersController::update/$1'); // update()
 $routes->patch('api/users/(:segment)',    'Backend\UsersController::update/$1'); // update()
 $routes->delete('api/users/(:segment)',   'Backend\UsersController::delete/$1');  // delete()
 */
 // เปรียบเสมือน เขียนข้างบนทั้งหมด
 $routes->resource('api/users',['controller' => 'Backend\UsersController','filter' => 'authApi']);
+
+// Fontend
+// Api Bannerslideimg
+$routes->resource('api/bannerslideimg',['controller' => 'Fontend\BannerslideController','filter' => 'authApi']);
+
 
 /*
  * --------------------------------------------------------------------
